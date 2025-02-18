@@ -1,10 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
+import { useState } from "react";
 import { auth, db } from "../components/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
-import "../components/auth.css"
+import "../components/auth.css";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ function Register() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
 
-  const handleRegister = async (e) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
@@ -31,10 +31,18 @@ function Register() {
         position: "top-center",
       });
     } catch (error) {
-      console.log(error.message);
-      toast.error(error.message, {
-        position: "bottom-center",
-      });
+      // Narrow down the error type using `instanceof` or type assertion
+      if (error instanceof Error) {
+        console.log(error.message);
+        toast.error(error.message, {
+          position: "bottom-center",
+        });
+      } else {
+        console.log("An unexpected error occurred:", error);
+        toast.error("An unexpected error occurred.", {
+          position: "bottom-center",
+        });
+      }
     }
   };
 

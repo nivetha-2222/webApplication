@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
-import { useSpring, animated } from "react-spring";
-
-// import "../components/user.css"
+import React, { useState, useEffect } from "react";
+import { useSpring, to } from "react-spring";
 import Header from "./header";
 import Footer from "./footer";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +14,12 @@ const Counter = () => {
   const [count, setCount] = useState(initialCount);
 
   // Animation for background color change
-  const { backgroundColor } = useSpring({
+  const springProps = useSpring({
     backgroundColor: `rgb(${Math.min(count * 10, 255)}, ${Math.min(
       count * 5 + 100,
       255
     )}, ${Math.max(255 - count * 10, 100)})`,
-    config: { tension: 200, friction: 20 }, // Adjusting for smoothness
+    config: { tension: 200, friction: 20 },
   });
 
   // Update the count in localStorage whenever it changes
@@ -62,14 +60,14 @@ const Counter = () => {
           background: "linear-gradient(to right, #0f9ec0, #0fc092)",
         }}
       >
-        <animated.div
+        <div
           style={{
-            backgroundColor,
             padding: "20px",
             textAlign: "center",
             borderRadius: "10px",
             boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
             width: "300px",
+            backgroundColor: springProps.backgroundColor.get(), // Safely resolve the animated value
           }}
         >
           <h2>Counter: {count}</h2>
@@ -84,7 +82,7 @@ const Counter = () => {
               Reset
             </button>
           </div>
-        </animated.div>
+        </div>
       </div>
 
       {/* Navigate to Dashboard button */}
@@ -113,7 +111,7 @@ const Counter = () => {
 };
 
 // Button styles for a consistent look
-const buttonStyle = {
+const buttonStyle: React.CSSProperties = {
   margin: "10px",
   padding: "10px 20px",
   fontSize: "16px",

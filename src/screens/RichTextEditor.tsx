@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom"; // Import to receive location state
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
