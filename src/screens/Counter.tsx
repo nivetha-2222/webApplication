@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSpring, to } from "react-spring";
+import { useSpring } from "react-spring";
 import Header from "./header";
 import Footer from "./footer";
 import { useNavigate } from "react-router-dom";
