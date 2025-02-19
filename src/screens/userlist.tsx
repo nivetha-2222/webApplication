@@ -14,7 +14,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import Header from "./header";
-import Footer from "./footer";
+
 import "../components/auth.css"
 
 type User = {
@@ -104,27 +104,34 @@ const UserList = () => {
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {users
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((user) => (
-                      <TableRow key={user.userId}>
-                        <TableCell >{user.userId}</TableCell>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.address}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.phone}</TableCell>
-                        <TableCell>
-                          <IconButton
-                            color="primary"
-                            onClick={() => handleEdit(user.userId)}
-                          >
-                            <EditIcon />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
+               <TableBody>
+  {users
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .map((user) => (
+      <TableRow key={user.userId}>
+        <TableCell>{user.userId}</TableCell>
+        <TableCell>{user.name}</TableCell>
+        <TableCell>{user.address}</TableCell>
+        <TableCell>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: user.content,
+            }}
+          />
+        </TableCell>
+        <TableCell>{user.phone}</TableCell>
+        <TableCell>
+          <IconButton
+            color="primary"
+            onClick={() => handleEdit(user.userId)}
+          >
+            <EditIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    ))}
+</TableBody>
+
               </Table>
             </TableContainer>
 
@@ -144,7 +151,7 @@ const UserList = () => {
           </Typography>
         )}
       </div>
-      <Footer />
+      
     </div>
   );
 };

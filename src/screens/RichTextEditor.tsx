@@ -4,7 +4,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, Paper } from "@mui/material";
 import Header from "./header";
-import Footer from "./footer";
 
 type User = {
   name: string;
@@ -53,7 +52,7 @@ const RichTextEditor = () => {
         alert("Content saved successfully!");
 
         // Navigate back to the user list or another page
-        navigate("/dashboard");
+        navigate("/userlist");
       }
     }
   };
@@ -70,7 +69,6 @@ const RichTextEditor = () => {
         </Button>
       </Paper>
     </div>
-    <Footer />
     </div>
   );
 };

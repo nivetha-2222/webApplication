@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSpring } from "react-spring";
 import Header from "./header";
 import Footer from "./footer";
 import { useNavigate } from "react-router-dom";
@@ -13,33 +12,36 @@ const Counter = () => {
   // State to keep track of the count
   const [count, setCount] = useState(initialCount);
 
-  // Animation for background color change
-  const springProps = useSpring({
-    backgroundColor: `rgb(${Math.min(count * 10, 255)}, ${Math.min(
-      count * 5 + 100,
-      255
-    )}, ${Math.max(255 - count * 10, 100)})`,
-    config: { tension: 200, friction: 20 },
-  });
+  // State to store the background color
+  const [bgColor, setBgColor] = useState("rgb(255, 255, 255)"); // Initial color (white)
 
   // Update the count in localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("count", count.toString());
   }, [count]);
 
-  // Increment the count
+  // Increment the count and change the color
   const increment = () => {
     setCount((prevCount) => prevCount + 1);
+    setBgColor(`rgb(${Math.min((count + 1) * 10, 255)}, ${Math.min((count + 1) * 5 + 100, 255)}, ${Math.max(255 - (count + 1) * 10, 100)})`);
   };
 
-  // Decrement the count
+  // Decrement the count and change the color
   const decrement = () => {
     setCount((prevCount) => Math.max(prevCount - 1, 0)); // Prevent count from going below 0
+    setBgColor(`rgb(${Math.min((count - 1) * 10, 255)}, ${Math.min((count - 1) * 5 + 100, 255)}, ${Math.max(255 - (count - 1) * 10, 100)})`);
   };
 
-  // Reset the count and background color
+  // Reset the count and reset the background color
   const reset = () => {
     setCount(0);
+    setBgColor("rgb(255, 255, 255)"); // Reset to initial color
+  };
+
+  // Logout function: Clear localStorage and navigate to the login page
+  const logout = () => {
+    localStorage.clear();
+    navigate("/Login");
   };
 
   // Navigate to the Dashboard page
@@ -67,7 +69,7 @@ const Counter = () => {
             borderRadius: "10px",
             boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
             width: "300px",
-            backgroundColor: springProps.backgroundColor.get(), // Safely resolve the animated value
+            backgroundColor: bgColor, // Directly apply the background color
           }}
         >
           <h2>Counter: {count}</h2>
@@ -104,6 +106,27 @@ const Counter = () => {
         }}
       >
         Go to UserForm
+      </button>
+
+      {/* Logout button on the left */}
+      <button
+        onClick={logout}
+        style={{
+          position: "fixed",
+          top: "100px",
+          left: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#e74c3c",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          fontSize: "16px",
+          cursor: "pointer",
+          boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+          transition: "background 0.3s ease",
+        }}
+      >
+        Logout
       </button>
       <Footer />
     </div>

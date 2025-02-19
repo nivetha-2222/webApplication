@@ -37,7 +37,7 @@ const SignInwithGoogle: React.FC = () => {
         });
 
         // Redirect user after successful login
-        window.location.href = "/profile";
+        window.location.href = "/Counter";
       }
     } catch (error: any) {
       console.error("Login error: ", error);
